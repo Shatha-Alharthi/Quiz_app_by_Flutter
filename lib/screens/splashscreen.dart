@@ -4,11 +4,11 @@ class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key});
 
   double getPaddingSize(BuildContext context) {
-    return MediaQuery.of(context).size.width * 0.05; // 5% of screen width
+    return MediaQuery.of(context).size.shortestSide * 0.05; // 5% of shortest side
   }
 
   double getLogoSize(BuildContext context) {
-    return MediaQuery.of(context).size.width * 0.8; // 30% of screen width for logo size
+    return MediaQuery.of(context).size.shortestSide * 0.8; // 80% of shortest side for logo size
   }
 
   Widget buildText(BuildContext context) {
@@ -16,7 +16,7 @@ class SplashScreen extends StatelessWidget {
       children: [
         // Add your logo here
         Image.asset('assets/logo.png', width: getLogoSize(context), height: getLogoSize(context)),
-        SizedBox(height:65 ), // Add some space between the logo and the text
+        SizedBox(height: 65), // Adjusted spacing for landscape orientation
         Text(
           'Start our Quiz app,\ntest your knowledge and have fun!',
           textAlign: TextAlign.center,
@@ -35,7 +35,7 @@ class SplashScreen extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {Navigator.pushNamed(context, '/login');},
         style: ElevatedButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.4),
@@ -45,12 +45,12 @@ class SplashScreen extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color.fromARGB(255, 121, 68, 243), Color.fromARGB(255, 231, 142, 253)], // Define the gradient colors
+              colors: [Color.fromARGB(255, 121, 68, 243), Color.fromARGB(255, 231, 142, 253)],
             ),
             borderRadius: BorderRadius.circular(3.5),
           ),
           child: Container(
-            constraints: BoxConstraints(minWidth: 88.0, minHeight: 36.0), // Button min size
+            constraints: BoxConstraints(minWidth: 88.0, minHeight: 36.0),
             alignment: Alignment.center,
             child: Text(
               'Start Quiz',
@@ -80,15 +80,17 @@ class SplashScreen extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         child: Padding(
           padding: EdgeInsets.all(getPaddingSize(context)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end, // Align content at the bottom
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 200.0), // Add bottom padding
-                child: buildText(context),
-              ),
-              buildButton(context),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 200.0),
+                  child: buildText(context),
+                ),
+                buildButton(context),
+              ],
+            ),
           ),
         ),
       ),
