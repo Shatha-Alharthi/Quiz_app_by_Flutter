@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/login.dart';
 import 'package:flutter_application_1/screens/questions.dart';
+import 'package:flutter_application_1/screens/data_list.dart';
 
 class CategoryScreen extends StatelessWidget {
   const CategoryScreen({Key? key}) : super(key: key);
@@ -11,109 +11,53 @@ class CategoryScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Quiz categories',
-          style: TextStyle(fontFamily: "Joan", fontWeight: FontWeight.bold, color: Colors.white),
-        ),
-        backgroundColor: Color.fromRGBO(121, 68, 243, 1),
-       leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LoginScreen(), // Navigate to the login screen
-              ),
-            );
-          },
+          style: TextStyle(fontFamily: "Joan", fontWeight: FontWeight.bold),
         ),
       ),
-      body: Center(
-        child: GridView.count(
-          crossAxisCount: 1,
-          padding: EdgeInsets.all(17.0),
-          mainAxisSpacing: 16.0,
-          crossAxisSpacing: 16.0,
-          childAspectRatio: 2.2, // Aspect ratio for square grid items
-          children: [
-            CustomQuizButton(
-              label: 'Math',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QuizQuestionsScreen(),
-                  ),
-                );
-              },
-            ),
-            CustomQuizButton(
-              label: 'Sciences',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QuizQuestionsScreen(),
-                  ),
-                );
-              },
-            ),
-            CustomQuizButton(
-              label: 'AI',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QuizQuestionsScreen(),
-                  ),
-                );
-              },
-            ),
-            CustomQuizButton(
-              label: 'General',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => QuizQuestionsScreen(),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+      body: ListView(
+        padding: EdgeInsets.symmetric(vertical: 100.0),
+        children: [
+          categoryContainer("Science", context, scienceQuizQuestionsAndAnswers),
+          SizedBox(height: 30.0),
+          categoryContainer("AI", context, aiQuizQuestionsAndAnswers),
+          SizedBox(height: 30.0),
+          categoryContainer("Math", context, mathQuizQuestionsAndAnswers),
+          SizedBox(height: 39.0),
+          categoryContainer("General", context, generalQuizQuestionsAndAnswers),
+        ],
       ),
     );
   }
-}
 
-class CustomQuizButton extends StatelessWidget {
-  final String label;
-  final VoidCallback onTap;
-
-  const CustomQuizButton({
-    required this.label,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [Color.fromRGBO(121, 68, 243, 1), Color.fromARGB(255, 231, 142, 253)],
+  Widget categoryContainer(String quizName, BuildContext context, List qList) {
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute<void>(
+            builder: (BuildContext context) => QuestionScreen(
+              questionsAndAnswersList: qList.map((e) => e as Map<String, dynamic>).toList(),
+            ),
           ),
-        ),
-        child: Center(
-          child: Text(
-            label,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
+        );
+      },
+      child: SizedBox(
+        height: 100.0,
+        child: Container(
+          padding: EdgeInsets.all(10.0),
+          margin: EdgeInsets.symmetric(horizontal: 20.0),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(15.0),
+            gradient: LinearGradient(
+              colors: [const Color.fromRGBO(121, 68, 243, 1), Color.fromARGB(255, 231, 142, 253)],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: Center(
+            child: Text(
+              quizName,
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
             ),
           ),
         ),
