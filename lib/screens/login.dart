@@ -1,12 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_application_1/screens/catagory_screen.dart';
 import 'package:flutter_application_1/utils/global_variable.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
-
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -21,15 +18,15 @@ class LoginScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(
-                  height: 80,
+                  height: 85,
                 ),
                 Image.asset(
                   "assets/logo.png",
                   height: 300,
-                  width: 300,
+                  width: 266,
                 ),
                 SizedBox(
-                  height: 30,
+                  height: 18,
                 ),
                 Text(
                   "Hello, welcome back!",
@@ -43,26 +40,25 @@ class LoginScreen extends StatelessWidget {
                 SizedBox(
                   height: 30,
                 ),
-
-               Container(
+                Container(
                   decoration: BoxDecoration(
                     border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
-                 child: TextFormField(
-                     controller: userNameController,
-                     validator: (textFromUserName) {
+                  child: TextFormField(
+                    controller: userNameController,
+                    validator: (textFromUserName) {
                       if (textFromUserName!.isEmpty) {
                         return "Please write your name";
-                       } else if (!textFromUserName.startsWith(RegExp(r'[A-Z]'))) {
-                      return "The first letter should be capital";
-                     }
-                   },
+                      } else if (!textFromUserName.startsWith(RegExp(r'[A-Z]'))) {
+                        return "The first letter should be capital";
+                      }
+                    },
                     decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'UserName',
-                    prefixIcon: Icon(Icons.person),
-                  ),
+                      border: OutlineInputBorder(),
+                      hintText: 'UserName',
+                      prefixIcon: Icon(Icons.person),
+                    ),
                   ),
                 ),
                 SizedBox(
@@ -73,7 +69,7 @@ class LoginScreen extends StatelessWidget {
                 ),
                 Container(
                   decoration: BoxDecoration(
-                    border: Border.all(color: Color.fromARGB(255, 80, 79, 79)),
+                    border: Border.all(color: Color.fromARGB(255, 255, 255, 255)),
                     borderRadius: BorderRadius.circular(5.0),
                   ),
                   child: TextFormField(
@@ -83,19 +79,36 @@ class LoginScreen extends StatelessWidget {
                     // },
                     obscureText: true,
                     decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Password',
-                    prefixIcon: Icon(Icons.lock),
-                  ),
+                      border: OutlineInputBorder(),
+                      hintText: 'Password',
+                      prefixIcon: Icon(Icons.lock),
+                    ),
                   ),
                 ),
                 SizedBox(
-                  height: 60,
+                  height: 15,
+                ),
+                Text(
+                  "Forgot Password?",
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Color.fromARGB(200, 118, 20, 184),
+                    decoration: TextDecoration.underline,
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
                 ),
                 Row(
                   children: [
                     Expanded(
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          backgroundColor: Color.fromARGB(200, 118, 20, 184), // Change to your desired color
+                        ),
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
                             Navigator.push(
@@ -107,11 +120,12 @@ class LoginScreen extends StatelessWidget {
                           }
                         },
                         child: Text(
-                          "Login",
+                          "Sign In",
                           style: TextStyle(
                             fontSize: 21.0,
-                            fontFamily: 'RumRaisin',
+                            fontFamily: 'Joan',
                             fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 255, 255, 255),
                           ),
                         ),
                       ),
@@ -119,20 +133,47 @@ class LoginScreen extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 10,
+                ),
+                RichText(
+                  text: TextSpan(
+                    text: "No account? ",
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: Colors.black,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: "Sign up now",
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Color.fromARGB(200, 118, 20, 184),
+                          decoration: TextDecoration.underline,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  height: 17,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Image.asset(
-                      "assets/gmail1.png",
+                      "assets/google_logo.png",
                       height: 55,
                       width: 55,
                     ),
                     Image.asset(
                       "assets/linkedin1.png",
-                      height: 50,
-                      width: 50,
+                      height: 60,
+                      width: 60,
+                    ),
+                    Image.asset(
+                      "assets/facebook.png",
+                      height: 40,
+                      width: 40,
                     ),
                   ],
                 ),

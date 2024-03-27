@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/catagory_screen.dart';
+import 'package:flutter_application_1/utils/global_variable.dart';
+
 
 class ResultsScreen extends StatelessWidget {
   final int score;
@@ -18,9 +20,9 @@ class ResultsScreen extends StatelessWidget {
   Widget buildText(BuildContext context) {
     return Column(
       children: [
-        // Add your logo here
+        
         Image.asset('assets/congratslogo.png', width: getLogoSize(context), height: getLogoSize(context)),
-        SizedBox(height: 30), // Adjusted spacing for landscape orientation
+        SizedBox(height: 30), 
         Text(
           'Congratulations',
           textAlign: TextAlign.center,
@@ -32,7 +34,16 @@ class ResultsScreen extends StatelessWidget {
           ),
         ),
         Text(
-          'You did a great job in the Quiz!',
+          '${userNameController.text} !', textAlign: TextAlign.center,
+          style: TextStyle(
+          color: Colors.purple,
+          fontSize: 28,
+          fontFamily: "Joan",
+          fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          'You did a great job in the Quiz',
           textAlign: TextAlign.center,
           style: TextStyle(
             color: Color.fromARGB(255, 255, 255, 255),
@@ -57,16 +68,16 @@ class ResultsScreen extends StatelessWidget {
             Text(
               ' $score',
               style: TextStyle(
-                color: Colors.purple, // Change color to green or any other color you prefer
+                color: Colors.purple, 
                 fontSize: 24,
                 fontFamily: "Joan",
                 fontWeight: FontWeight.bold,
               ),
             ),
             Text(
-              '/$totalQuestions',
+              ' / $totalQuestions',
               style: TextStyle(
-                color: Color.fromARGB(255, 255, 255, 255),
+                color:  const Color.fromARGB(255, 255, 255, 255),
                 fontSize: 24,
                 fontFamily: "Joan",
                 fontWeight: FontWeight.bold,
@@ -80,7 +91,7 @@ class ResultsScreen extends StatelessWidget {
 
   Widget buildButton(BuildContext context, String label, VoidCallback onPressed) {
     return SizedBox(
-      width: double.infinity,
+      height: 35,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(

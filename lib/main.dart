@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/screens/results.dart';
 import 'package:flutter_application_1/screens/splashscreen.dart';
-import 'package:flutter_application_1/screens/login.dart';
-import 'package:flutter_application_1/screens/catagory_screen.dart';
-import 'package:flutter_application_1/screens/questions.dart';
 
 void main() {
   runApp(const MyApp());
