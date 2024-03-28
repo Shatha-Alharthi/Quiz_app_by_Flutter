@@ -8,28 +8,64 @@ class CategoryScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Quiz categories',
-          style: TextStyle(fontFamily: "Joan", fontWeight: FontWeight.bold),
-        ),
-      ),
-      body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 100.0),
+      body: Stack(
         children: [
-          categoryContainer("Science", context, scienceQuizQuestionsAndAnswers),
-          SizedBox(height: 30.0),
-          categoryContainer("AI", context, aiQuizQuestionsAndAnswers),
-          SizedBox(height: 30.0),
-          categoryContainer("Math", context, mathQuizQuestionsAndAnswers),
-          SizedBox(height: 39.0),
-          categoryContainer("General", context, generalQuizQuestionsAndAnswers),
+          // Background Image
+          Positioned.fill(
+            child: Image.asset(
+              "assets/catagoryBackground.png",
+              fit: BoxFit.cover,
+            ),
+          ),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(78.0),
+                child: Text(
+                  'Choose Category',
+                  style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold, color: Colors.white, fontFamily: 'Joan'),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Expanded(
+                child: ListView(
+                  padding: EdgeInsets.only(top: 48.0), // Adjust the top padding to center the list items
+                  children: [
+                    categoryContainer("Science", context, scienceQuizQuestionsAndAnswers),
+                    SizedBox(height: 12.0),
+                    categoryContainer("AI", context, aiQuizQuestionsAndAnswers),
+                    SizedBox(height: 12.0),
+                    categoryContainer("Math", context, mathQuizQuestionsAndAnswers),
+                    SizedBox(height: 12.0),
+                    categoryContainer("General", context, generalQuizQuestionsAndAnswers),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 
   Widget categoryContainer(String quizName, BuildContext context, List qList) {
+    // Map quiz names to corresponding icons
+    Map<String, IconData> quizIcons = {
+      "Science": Icons.science,
+      "AI": Icons.computer,
+      "Math": Icons.calculate,
+      "General": Icons.book,
+      // Add more quiz names and icons as needed
+    };
+
+    // Get the icon for the current quiz name, default to a generic icon if not found
+    IconData iconData = quizIcons[quizName] ?? Icons.category;
+
     return InkWell(
       onTap: () {
         Navigator.push(
@@ -42,23 +78,28 @@ class CategoryScreen extends StatelessWidget {
         );
       },
       child: SizedBox(
-        height: 100.0,
+        height: 120.0,
         child: Container(
-          padding: EdgeInsets.all(10.0),
-          margin: EdgeInsets.symmetric(horizontal: 20.0),
+          padding: EdgeInsets.all(5.0),
+          margin: EdgeInsets.symmetric(horizontal: 15.0, vertical: 1.0),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15.0),
             gradient: LinearGradient(
-              colors: [const Color.fromRGBO(121, 68, 243, 1), Color.fromARGB(255, 231, 142, 253)],
+              colors: [Color(0xFF9C32E3), Color(0xFFD79DD7)],
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
             ),
           ),
-          child: Center(
-            child: Text(
-              quizName,
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(iconData, color: Colors.white, size: 30), // Use the iconData variable
+              SizedBox(width: 10),
+              Text(
+                quizName,
+                style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold, color: Colors.white),
+              ),
+            ],
           ),
         ),
       ),

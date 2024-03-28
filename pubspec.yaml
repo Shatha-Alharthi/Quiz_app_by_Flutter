@@ -71,6 +71,13 @@ flutter:
     - assets/linkedin1.png
     - assets/background2.jpg
     - assets/new_background1.jpg
+    - assets/newBacground 3.png
+    - assets/loginBackground.png
+    - assets/catagoryBackground.png
+    - assets/Q.png
+    - assets/resultscreen.png
+    - assets/scooore.png
+    
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

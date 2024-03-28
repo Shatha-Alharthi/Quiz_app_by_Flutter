@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/screens/catagory_screen.dart';
 import 'package:flutter_application_1/utils/global_variable.dart';
 
-
 class ResultsScreen extends StatelessWidget {
   final int score;
   final int totalQuestions;
@@ -10,7 +9,7 @@ class ResultsScreen extends StatelessWidget {
   const ResultsScreen({Key? key, required this.score, required this.totalQuestions}) : super(key: key);
 
   double getPaddingSize(BuildContext context) {
-    return MediaQuery.of(context).size.shortestSide * 0.09; // 5% of shortest side
+    return MediaQuery.of(context).size.shortestSide * 0.07; // 5% of shortest side
   }
 
   double getLogoSize(BuildContext context) {
@@ -18,48 +17,57 @@ class ResultsScreen extends StatelessWidget {
   }
 
   Widget buildText(BuildContext context) {
+    String message;
+    Color messageColor;
+    String imagePath;
+
+    if (score >= 4) {
+      message = 'You did a great job in the Quiz';
+      messageColor = Color(0xFF38005D);
+      imagePath = 'assets/congratslogo.png';
+    } else {
+      message = 'Better luck next time !';
+      messageColor = Color(0xFF9C32E3);
+      imagePath = 'assets/scooore.png';
+    }
+
     return Column(
       children: [
-        
-        Image.asset('assets/congratslogo.png', width: getLogoSize(context), height: getLogoSize(context)),
-        SizedBox(height: 30), 
-        Text(
-          'Congratulations',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
-            fontSize: 40,
-            fontFamily: "Joan",
-            fontWeight: FontWeight.bold,
-          ),
+        SizedBox(height: 100),
+        Image.asset(
+          imagePath,
+          width: getLogoSize(context),
+          height: getLogoSize(context),
         ),
         Text(
-          '${userNameController.text} !', textAlign: TextAlign.center,
-          style: TextStyle(
-          color: Colors.purple,
-          fontSize: 28,
-          fontFamily: "Joan",
-          fontWeight: FontWeight.bold,
-          ),
-        ),
-        Text(
-          'You did a great job in the Quiz',
+          message,
           textAlign: TextAlign.center,
           style: TextStyle(
-            color: Color.fromARGB(255, 255, 255, 255),
+            color: messageColor,
             fontSize: 28,
             fontFamily: "Joan",
             fontWeight: FontWeight.bold,
           ),
         ),
-        SizedBox(height: 20),
+        SizedBox(height: 10),
+        Text(
+          '${userNameController.text} ',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            color: Color(0xFF38005D),
+            fontSize: 28,
+            //fontFamily: "Joan",
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
-              'Your score: ',
+              'Your score is  ',
               style: TextStyle(
-                color: Color.fromARGB(255, 255, 255, 255),
+                color: Color(0xFF38005D),
                 fontSize: 24,
                 fontFamily: "Joan",
                 fontWeight: FontWeight.bold,
@@ -68,7 +76,7 @@ class ResultsScreen extends StatelessWidget {
             Text(
               ' $score',
               style: TextStyle(
-                color: Colors.purple, 
+                color: Color(0xFF9C32E3),
                 fontSize: 24,
                 fontFamily: "Joan",
                 fontWeight: FontWeight.bold,
@@ -77,7 +85,7 @@ class ResultsScreen extends StatelessWidget {
             Text(
               ' / $totalQuestions',
               style: TextStyle(
-                color:  const Color.fromARGB(255, 255, 255, 255),
+                color: Color(0xFF38005D),
                 fontSize: 24,
                 fontFamily: "Joan",
                 fontWeight: FontWeight.bold,
@@ -103,7 +111,7 @@ class ResultsScreen extends StatelessWidget {
         child: Ink(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Color.fromARGB(255, 121, 68, 243), Color.fromARGB(255, 231, 142, 253)],
+              colors: [Color(0xFF9C32E3), Color(0xFFD79DD7)],
             ),
             borderRadius: BorderRadius.circular(3.5),
           ),
@@ -130,7 +138,7 @@ class ResultsScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/background.jpg'),
+            image: AssetImage('assets/resultscreen.png'),
             fit: BoxFit.cover,
           ),
         ),

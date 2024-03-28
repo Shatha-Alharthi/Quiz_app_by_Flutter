@@ -13,113 +13,121 @@ class QuestionScreen extends StatefulWidget {
 class _QuestionScreenState extends State<QuestionScreen> {
   int _currentIndex = 0;
   int _score = 0;
+  Map<int, String?> _selectedAnswers = {};
 
   void _answerQuestion(String selectedAnswer) {
-    if (selectedAnswer == widget.questionsAndAnswersList![_currentIndex]["correctAnswer"]) {
+    setState(() {
+      _selectedAnswers[_currentIndex] = selectedAnswer;
+    });
+
+    String correctAnswer = widget.questionsAndAnswersList![_currentIndex]["correctAnswer"].toString();
+
+    if (selectedAnswer.toString() == correctAnswer) {
       setState(() {
         _score++;
       });
     }
+  }
 
-    if (_currentIndex + 1 < widget.questionsAndAnswersList!.length) {
-      setState(() {
-        _currentIndex++;
-      });
-    } else {
-      Navigator.push(
-        context,
-        MaterialPageRoute<void>(
-          builder: (BuildContext context) => ResultsScreen(score: _score, totalQuestions: widget.questionsAndAnswersList!.length),
-        ),
-      );
-    }
+  void _playAgain() {
+    setState(() {
+      _currentIndex = 0;
+      _score = 0;
+      _selectedAnswers.clear();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            'Quiz',
-            style: TextStyle(fontFamily: "Joan", fontWeight: FontWeight.bold),
-          ),
-          backgroundColor: Color.fromARGB(255, 134, 76, 215),
-        ),
-        body: Padding(
-          padding: EdgeInsets.only(top: 120, bottom: 20, right: 12, left: 12),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                children: [
-                  Text(
-                    "Question: ",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: "Joan",
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  Text(
-                    "${_currentIndex + 1}/  ${widget.questionsAndAnswersList!.length}  ",
-                    style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Color.fromARGB(255, 73, 50, 156)),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 19,
-              ),
-              Text(
-                widget.questionsAndAnswersList![_currentIndex]["question"],
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: "Joan",
-                  color: const Color.fromARGB(255, 4, 4, 4),
+        body: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                      "assets/Q.png"), // Add your image path here
+                  fit: BoxFit.cover,
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.1,
-              ),
-              Column(
+            ),
+            Padding(
+              padding:
+                  EdgeInsets.only(top: 40, bottom: 20, right: 15, left: 15),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  for (int i = 0;
-                      i <
-                          widget.questionsAndAnswersList![_currentIndex]["choices"]
-                              .length;
-                      i++)
-                    Column(
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {
-                            _answerQuestion(widget.questionsAndAnswersList![_currentIndex]["choices"][i]);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(5.4),
-                            ),
-                            padding: EdgeInsets.zero,
-                            backgroundColor: Colors.transparent,
-                            elevation: 0.1,
-                          ),
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  const Color.fromRGBO(121, 68, 243, 1),
-                                  Color.fromARGB(255, 231, 142, 253),
-                                ],
-                                begin: Alignment.centerLeft,
-                                end: Alignment.centerRight,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Question:  ",
+                        style: TextStyle(
+                          fontSize: 25,
+                          color: Color.fromARGB(255, 255, 255, 255),
+                          fontFamily: "Joan",
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        "${_currentIndex + 1} / ${widget.questionsAndAnswersList!.length}  ",
+                        style: TextStyle(
+                            fontSize: 23,
+                            fontWeight: FontWeight.bold,
+                            color: Color.fromARGB(255, 117, 37, 171)),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Center(
+                    child: Text(
+                      widget.questionsAndAnswersList![_currentIndex]["question"],
+                      style: TextStyle(
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Joan",
+                        color: Color.fromARGB(255, 255, 255, 255),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.1,
+                  ),
+                  Column(
+                    children: [
+                      for (int i = 0;
+                          i <
+                              widget.questionsAndAnswersList![_currentIndex][
+                                  "choices"]
+                                  .length;
+                          i++)
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 10.0),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _answerQuestion(widget.questionsAndAnswersList![_currentIndex]["choices"][i]);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(7.4),
+                                // side: BorderSide(
+                                //   color: _selectedAnswers[_currentIndex] == widget.questionsAndAnswersList![_currentIndex]["choices"][i] ? Colors.purple : Colors.transparent, // Change the border color to purple if selected
+                                //   width: 4.5, // Set the border width
+                                // ),
                               ),
-                              borderRadius: BorderRadius.circular(5.4),
+                              padding: EdgeInsets.zero,
+                              elevation: 0.1,
                             ),
                             child: Container(
-                              constraints: BoxConstraints(minWidth: 150, minHeight: 50),
+                              decoration: BoxDecoration(
+                                color: _selectedAnswers[_currentIndex] == widget.questionsAndAnswersList![_currentIndex]["choices"][i] ? Color(0xFFD79DD7) : Colors.transparent, // Change the box color to purple if selected
+                                borderRadius: BorderRadius.circular(7.4),
+                              ),
+                              constraints: BoxConstraints(minWidth: 150, minHeight: 65),
                               alignment: Alignment.center,
                               child: Text(
                                 widget.questionsAndAnswersList![_currentIndex]["choices"][i],
@@ -127,19 +135,87 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                 style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
-                                  color: Colors.white,
+                                  color: Color(0xFF691D9C),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        SizedBox(height: 10), //  space between buttons
-                      ],
-                    ),
+                    ],
+                  ),
+                  SizedBox(height: 20), // Add some space between the choices and the buttons
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ElevatedButton(
+                        onPressed: _selectedAnswers[_currentIndex] != null
+                            ? () {
+                                if (_currentIndex + 1 <
+                                    widget.questionsAndAnswersList!.length) {
+                                  setState(() {
+                                    _currentIndex++;
+                                  });
+                                } else {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          ResultsScreen(
+                                              score: _score,
+                                              totalQuestions: widget
+                                                  .questionsAndAnswersList!
+                                                  .length),
+                                    ),
+                                  );
+                                }
+                              }
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple, // Change the background color to purple
+                        ),
+                        child: Text(
+                          _currentIndex + 1 <
+                                  widget.questionsAndAnswersList!.length
+                              ? "    Next     "
+                              : "    Done     ",
+                          style: TextStyle(color: Colors.white), // Change the text color to white
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: _currentIndex > 0
+                            ? () {
+                                setState(() {
+                                  _currentIndex--;
+                                });
+                              }
+                            : null,
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple, // Change the background color to purple
+                        ),
+                        child: Text(
+                          "     Back     ",
+                          style: TextStyle(color: Colors.white), // Change the text color to white
+                        ),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          _playAgain();
+                          Navigator.pop(context);
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple, // Change the background color to purple
+                        ),
+                        child: Text(
+                          "Play Again",
+                          style: TextStyle(color: Colors.white), // Change the text color to white
+                        ),
+                      ),
+                    ],
+                  ),
                 ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
