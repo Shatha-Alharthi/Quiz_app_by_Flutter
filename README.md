@@ -12,3 +12,9 @@ The <span style="font-size: 24px;">Quiz App</span> is a mobile application devel
 ## Screenshots
 ![Quiz App](./screenshots/Quizz%20App.gif)
 
+
+
+
+![Quiz App](./screenshots/screens.png)
+
+
