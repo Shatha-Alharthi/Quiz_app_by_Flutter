@@ -10,5 +10,5 @@ The <span style="font-size: 24px;">Quiz App</span> is a mobile application devel
 - Score tracking throughout the quiz.
 
 ## Screenshots
-![Quiz App](./screenshots/Quiz%20App.gif)
+![Quiz App](./screenshots/Quizz%20App.gif)
 
